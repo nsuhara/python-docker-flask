@@ -1,0 +1,23 @@
+version: '3'
+services:
+  docker_postgres:
+    image: postgres:11.5
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: feedback
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8
+
+  app:
+    build: .
+    depends_on:
+      - docker_postgres
+    ports:
+      - 5000:5000
+    environment:
+      ENV_CONFIG: docker
+      SQLALCHEMY_POOL_SIZE: 5
+      SQLALCHEMY_MAX_OVERFLOW: 10
+      SQLALCHEMY_POOL_TIMEOUT: 30

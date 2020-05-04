@@ -1,0 +1,6 @@
+export PYTHONPATH=app/
+export FLASK_APP=app/run.py
+export ENV_CONFIG=localhost
+export SQLALCHEMY_POOL_SIZE=5
+export SQLALCHEMY_MAX_OVERFLOW=10
+export SQLALCHEMY_POOL_TIMEOUT=30

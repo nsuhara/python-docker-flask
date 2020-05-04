@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>feedback-app</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#response").html("Response Values");
+
+            $("#button").click(function () {
+                var data = {
+                    "process": "back_end",
+                    "request": {
+                        "param1": "upsert",
+                        "param2": [{
+                            "service": $("#service").val(),
+                            "title": $("#title").val(),
+                            "detail": $("#detail").val()
+                        }]
+                    }
+                };
+
+                $.ajax({
+                    type: "post",
+                    url: $("#url").val(),
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json",
+                    scriptCharset: "utf-8",
+                    success: function (data) {
+                        alert("success");
+                        $("#response").html(JSON.stringify(data));
+                        $("#title").val("");
+                        $("#detail").val("");
+                    },
+                    error: function (data) {
+                        alert("error");
+                        $("#response").html(JSON.stringify(data));
+                    }
+                });
+            })
+        })
+    </script>
+
+</head>
+
+<body>
+    <h1>feedback-app</h1>
+    <p>url:</p>
+    <input type="text" id="url" name="url" size="100" value="{{ url }}">
+    <p>service:</p>
+    <input type="text" id="service" size="100" value="{{ service }}">
+    <p>title:</p>
+    <input type="text" id="title" size="100" value="{{ title }}">
+    <p>detail:</p>
+    <textarea id="detail" cols=100 rows=10></textarea>
+    <p><button id="button" type="button">submit</button></p>
+    <textarea id="response" cols=100 rows=10 disabled></textarea>
+</body>
+
+</html>
